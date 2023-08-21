@@ -1,0 +1,17 @@
+server:
+  port: 9001
+
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+
+  datasource:
+    url: jdbc:mysql://localhost/users?useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+
