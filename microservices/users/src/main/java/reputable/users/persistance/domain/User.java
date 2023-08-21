@@ -18,12 +18,12 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{9,21}$", message = "Password must be between 9-20 characters and contain at least one UPPER, one lower, one number (0-9), and one special character (!@#$%^&*)")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{9,}$", message = "Password must be at least 9 characters and contain at least one UPPER, one lower, one number (0-9), and one special character (!@#$%^&*)")
     @NotNull(message = "please enter a password")
     private String password;
     private String userName;
     @NotEmpty(message = "user must have at least one role")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "roles_id", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "roles")
     @Enumerated(EnumType.STRING)

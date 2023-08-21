@@ -1,5 +1,6 @@
 package reputable.users.communication.endpoint;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import reputable.users.logic.UserService;
 import reputable.users.persistance.domain.User;
@@ -22,5 +23,10 @@ public class UserEndpoint {
     @PostMapping("/sign-up")
     User signUp(@RequestBody User user) {
         return userService.addUser(user);
+    }
+    @GetMapping("/here")
+    @Secured("STANDARD")
+    String access() {
+        return "success";
     }
 }
