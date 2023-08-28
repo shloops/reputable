@@ -6,6 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,7 +34,9 @@ public class User {
     //TODO - validate number
     private String phoneNumber;
     private LocalDate dateOfBirth;
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    @ManyToMany
+    private Set<Eatery> favouriteEateries = new HashSet<>();
     public User() {
     }
 
@@ -53,6 +56,10 @@ public class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Set<Eatery> getFavouriteEateries() {
+        return favouriteEateries;
     }
 
     public Long getId() {
