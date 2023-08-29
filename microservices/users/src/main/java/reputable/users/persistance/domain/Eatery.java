@@ -23,6 +23,7 @@ public class Eatery {
     private Set<Keyword> keywords;
     private String website;
     private String phoneNumber;
+    //@JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     private User manager;
 

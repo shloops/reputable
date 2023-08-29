@@ -4,6 +4,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import reputable.users.logic.UserService;
 import reputable.users.persistance.domain.Eatery;
+import reputable.users.persistance.domain.Role;
 import reputable.users.persistance.domain.User;
 
 import java.util.Set;
@@ -36,5 +37,12 @@ public class UserEndpoint {
     @PutMapping("/{userId}/add/{eateryId}")
     Set<Eatery> addEateryToFavourites(@PathVariable Long userId, @PathVariable Long eateryId) {
         return userService.addEateryToFavourites(userId, eateryId);
+    }
+
+    //TODO - refactor role to strings not enums
+    @Secured("SUPER_ADMIN")
+    @PutMapping("/grant-authority/{userId}")
+    User grantManagerOrStaffAuthority(@RequestBody Role role, @PathVariable Long userId) {
+        return userService.grantManagerOrStaffAuthority(role, userId);
     }
 }

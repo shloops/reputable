@@ -3,6 +3,7 @@ package reputable.users.logic;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reputable.users.persistance.domain.Eatery;
+import reputable.users.persistance.domain.Role;
 import reputable.users.persistance.domain.User;
 import reputable.users.persistance.repository.EateryRepository;
 import reputable.users.persistance.repository.UserRepository;
@@ -31,9 +32,19 @@ public class UserService {
             //TODO - tidy up errors
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Set.of(Role.STANDARD));
         return userRepository.save(user);
     }
-
+    public User grantManagerOrStaffAuthority(Role role, Long userId) {
+        var oUser = userRepository.findById(userId);
+        if (oUser.isPresent()) {
+            var user = oUser.get();
+            user.getRoles().add(role);
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("user not found");
+        }
+    }
     public Set<Eatery> addEateryToFavourites(Long userId, Long eateryId) {
         if (eateryRepository.existsById(eateryId)) {
             Eatery eatery = eateryRepository.findById(eateryId).get();
